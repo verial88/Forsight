@@ -1,6 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
+from openpyxl import load_workbook
+import xlrd
+import re
 
+#Parsing of site https://bashesk.ru/corporate/tariffs/unregulated/limits/
 file_number = 1
 link = f'https://bashesk.ru/corporate/tariffs/unregulated/limits/'
 params = {
@@ -22,3 +26,10 @@ for file in all_files:
 
     file_number += 1
 
+# parsing of files
+book = xlrd.open_workbook('files/1.xls')
+sheet = book.sheet_by_name('1 ц.к. ')
+# print(book.sheet_names())
+pattern = r"^text:\'г) объем фактического пикового потребления гарантирующего поставщика на оптовом рынке, МВт   \'$"
+for row in sheet.get_rows():
+    print(row) #нужно как-то вычленить 'number:'
